@@ -1,3 +1,4 @@
-my first file
+Git next steps
 ===
-foo
+ - [] create new ssh keys?
+ - [] set up post commit triggers?
