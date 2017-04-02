@@ -1,11 +1,11 @@
 #!/bin/sh -x
 
 ##########################################
-#Procedure for processing ChipSeq data
-#for the basic ChIP Sequencing SSF product
-#Written by: Michele Busby
-#			 Catherine Li	
-#Last Changed: 2/13/15
+#Modification of ChIP Sequencing SSF product
+#processing script by Michele Busby & Catherine Li
+#to downsample at specific numbers of reads
+# by Jean Chang
+#Last Changed: 04012017 (April Fool's!)
 ##########################################
 
 INPUT_BAM=$1
@@ -16,6 +16,7 @@ GENOME_FILE=$5
 PAIRED_END=$6 #TRUE If paired end or else FALSE
 QUEUE=$7
 SCRIPT_DIR=$8
+SUBSAMPLE_ITERATIONS=$9
 
 
 
@@ -49,66 +50,66 @@ echo input bam: $INPUT_BAM
 echo Writing to: $OUTPUT_DIR
 
 #If output directory does not exist make it
-if [ -d $OUTPUT_DIR ] ; then 
+if [ -d $OUTPUT_DIR ] ; then
     echo "Output directory $OUTPUT_DIR exists."
-else 	
+else
    echo "Output directory $OUTPUT_DIR does not exists. Creating directory."
    mkdir $OUTPUT_DIR
 fi
 
-if [ -d $OUTPUT_DIR/Tags ] ; then 
+if [ -d $OUTPUT_DIR/Tags ] ; then
     echo "Output directory $OUTPUT_DIR exists."
-else 	
+else
    echo "Output directory $OUTPUT_DIR does not exists. Creating directory."
    mkdir $OUTPUT_DIR/Tags
 fi
 
-if [ -d $OUTPUT_DIR/Peaks ] ; 
-then 
+if [ -d $OUTPUT_DIR/Peaks ] ;
+then
     echo "Output directory $OUTPUT_DIR/Peaks exists."
-else 	
+else
    echo "Output directory $OUTPUT_DIR/Peaks  does not exists. Creating directory."
-   mkdir $OUTPUT_DIR/Peaks 
+   mkdir $OUTPUT_DIR/Peaks
 fi
 
-if [ -d $OUTPUT_DIR/Peaks/bed ] ; 
-then 
+if [ -d $OUTPUT_DIR/Peaks/bed ] ;
+then
     echo "Output directory $OUTPUT_DIR/Peaks/bed exists."
-else 	
+else
    echo "Output directory $OUTPUT_DIR/Peaks/bed  does not exists. Creating directory."
-   mkdir $OUTPUT_DIR/Peaks/bed 
+   mkdir $OUTPUT_DIR/Peaks/bed
 fi
 
-if [ -d $OUTPUT_DIR/tdfs ] ; 
-then 
+if [ -d $OUTPUT_DIR/tdfs ] ;
+then
     echo "Output directory $OUTPUT_DIR/tdfs exists."
-else 	
+else
    echo "Output directory $OUTPUT_DIR/tdfs does not exists. Creating directory."
    mkdir $OUTPUT_DIR/tdfs
 fi
 
 #Downsampling directories
 
-if [ -d $OUTPUT_DIR/Downsampling ] ; 
-then 
+if [ -d $OUTPUT_DIR/Downsampling ] ;
+then
     echo "Output directory $OUTPUT_DIR/Downsampling exists."
-else 	
+else
    echo "Output directory $OUTPUT_DIR/Downsampling does not exists. Creating directory."
    mkdir $OUTPUT_DIR/Downsampling
 fi
 
-if [ -d $OUTPUT_DIR/Downsampling/bams ] ; 
-then 
+if [ -d $OUTPUT_DIR/Downsampling/bams ] ;
+then
     echo "Output directory $OUTPUT_DIR/Downsampling/bams exists."
-else 	
+else
    echo "Output directory $OUTPUT_DIR/Downsampling/bams  does not exists. Creating directory."
    mkdir $OUTPUT_DIR/Downsampling/bams
 fi
 
-if [ -d $OUTPUT_DIR/Downsampling/Tags ] ; 
-then 
+if [ -d $OUTPUT_DIR/Downsampling/Tags ] ;
+then
     echo "Output directory $OUTPUT_DIR/Downsampling/tags exists."
-else 	
+else
    echo "Output directory $OUTPUT_DIR/Downsampling/tags  does not exists. Creating directory."
    mkdir $OUTPUT_DIR/Downsampling/Tags
 fi
@@ -118,7 +119,7 @@ fi
 #Get stem
 ##########################################
 
-STEM=$(basename "${INPUT_BAM}" .bam) 
+STEM=$(basename "${INPUT_BAM}" .bam)
 
 ##########################################
 #Make bam a tdf
@@ -135,7 +136,7 @@ igvtools count -e 100 $INPUT_BAM $OUTPUT_DIR/tdfs/$STEM.tdf $GENOME_FILE
 ##########################################
 
 
-if [ "$PAIRED_END" == "TRUE" ]; 
+if [ "$PAIRED_END" == "TRUE" ];
 then
 	echo "Paired end"
 	echo "makeTagDirectory $OUTPUT_DIR/$STEM $INPUT_BAM -genome $GENOME_FILE -checkGC -illuminaPE"
@@ -153,9 +154,9 @@ fi
 
 
 if [ "$CONTROL"  != "NONE" ]  &&   [ -f  "$CONTROL" ];
-then 
+then
 	echo "Control is a file, assuming bam"
-	CONTROL_STEM=$(basename "${CONTROL}" .bam) 
+	CONTROL_STEM=$(basename "${CONTROL}" .bam)
 	CONTROL_BAM=$CONTROL;
 	CONTROL_DIR="$OUTPUT_DIR/Tags/$CONTROL_STEM"
 
@@ -167,26 +168,26 @@ then
 	else
 		echo "Not paired end"
 		echo "makeTagDirectory $OUTPUT_DIR/$CONTROL_STEM $CONTROL_BAM -genome $GENOME_FILE -checkGC "
-		makeTagDirectory $CONTROL_DIR $CONTROL_BAM -genome $GENOME_FILE -checkGC	
-	
+		makeTagDirectory $CONTROL_DIR $CONTROL_BAM -genome $GENOME_FILE -checkGC
+
 	fi
 elif [ "$CONTROL"  != "NONE" ]  &&  [ -d  "$CONTROL" ]; then
 		echo "Control is a directory, assuming processed homer peaks"
 		CONTROL_DIR="$CONTROL";
 		echo "Control dir is $CONTROL_DIR "
-		
+
 else
-	echo "Nothing found for control $CONTROL" 
+	echo "Nothing found for control $CONTROL"
 fi
 
 ##########################################
 #Find peaks
 ##########################################
 
-if [ "$CONTROL" == "NONE" ]; 
+if [ "$CONTROL" == "NONE" ];
 then
 	echo "findPeaks $OUTPUT_DIR/$STEM -style $PEAK_STYLE -o $OUTPUT_DIR/Peaks/$STEM.calls "
-	findPeaks $OUTPUT_DIR/Tags/$STEM -style $PEAK_STYLE -o $OUTPUT_DIR/Peaks/$STEM.calls 	
+	findPeaks $OUTPUT_DIR/Tags/$STEM -style $PEAK_STYLE -o $OUTPUT_DIR/Peaks/$STEM.calls
 
 else
 	echo "findPeaks $OUTPUT_DIR/$STEM -style $PEAK_STYLE -o $OUTPUT_DIR/Peaks/$STEM.calls -i $CONTROL_DIR"
@@ -226,24 +227,38 @@ echo "$STEM $spotScore" >> $OUTPUT_DIR/Peaks/spotscores.txt
 #Find the N Peaks of downsampled fields
 ##########################################
 
-for ((i=1; i<40; i=i+1));
-	do 	N_READS=$(echo "scale=0; $i*$readsInAlignment/20" |bc)	
-	echo N_READS is $N_READS 
+if [ $# -eq 8 ]
+  then
+    echo "No subsample iteration argument supplied, setting to 2 iterations"
+    SUBSAMPLE_ITERATIONS=2
+  else
+    echo "Setting subsample iteration to $9"
+    SUBSAMPLE_ITERATIONS=$9
+fi
 
-	echo sh $SCRIPT_DIR/ChipSeqCallPeaksDownsampled.sh $INPUT_BAM $OUTPUT_DIR $CONTROL $PEAK_STYLE $GENOME_FILE $PAIRED_END $N_READS $CONTROL_DIR $SCRIPT_DIR
+for i in 50000
+# commenting out other subsample points for quicker testing: 100000 250000 600000 1500000 4000000 11000000 30000000
+    do
+    for ((j=1; j<=$SUBSAMPLE_ITERATIONS; j=j+1));
+        do
+        N_READS=$i
+        SEED=$j
+        echo N_READS is $N_READS
+        echo SEED is $SEED
+        echo sh $SCRIPT_DIR/ChipSeqCallPeaksDownsampled.sh $INPUT_BAM $OUTPUT_DIR $CONTROL $PEAK_STYLE $GENOME_FILE $PAIRED_END $N_READS $CONTROL_DIR $SCRIPT_DIR $SEED
 
-echo OUTPUT_DIR $OUTPUT_DIR 
-echo QUEUE  $QUEUE 
-echo SCRIPT_DIR $SCRIPT_DIR
-echo CONTROL $CONTROL 
-echo PEAK_STYLE $PEAK_STYLE 
-echo GENOME_FILE $GENOME_FILE 
-echo PAIRED_END $PAIRED_END 
-echo N_READS $N_READS 
-echo CONTROL_DIR $CONTROL_DIR 
-echo SCRIPT_DIR $SCRIPT_DIR
+        echo OUTPUT_DIR $OUTPUT_DIR
+        echo QUEUE  $QUEUE
+        echo SCRIPT_DIR $SCRIPT_DIR
+        echo CONTROL $CONTROL
+        echo PEAK_STYLE $PEAK_STYLE
+        echo GENOME_FILE $GENOME_FILE
+        echo PAIRED_END $PAIRED_END
+        echo N_READS $N_READS
+        echo CONTROL_DIR $CONTROL_DIR 
+        echo SCRIPT_DIR $SCRIPT_DIR
 
 
-	qsub -V -cwd -o $OUTPUT_DIR -b y -j y -q $QUEUE -l h_vmem=32g sh $SCRIPT_DIR/ChipSeqCallPeaksDownsampled.sh $INPUT_BAM $OUTPUT_DIR $CONTROL $PEAK_STYLE $GENOME_FILE $PAIRED_END $N_READS $CONTROL_DIR $SCRIPT_DIR
-
+    	qsub -V -cwd -o $OUTPUT_DIR -b y -j y -q $QUEUE -l h_vmem=32g sh $SCRIPT_DIR/ChipSeqCallPeaksSubsampled.sh $INPUT_BAM $OUTPUT_DIR $CONTROL $PEAK_STYLE $GENOME_FILE $PAIRED_END $N_READS $CONTROL_DIR $SCRIPT_DIR $SEED
+    done
 done
