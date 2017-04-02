@@ -1,12 +1,11 @@
 #!/bin/sh -x
 
 ##########################################
-#Procedure for doing the dowsampling for
-#calculating saturation in ChipSeq data
-#for the basic ChIP Sequencing SSF product
-#Written by: Michele Busby
-#			 Catherine Li
-#Last Changed: 2/13/15
+#Modification of dowsampling script
+#by Michele Busby & Catherine Li
+#to accept downsample seeds
+# by Jean Chang
+#Last Changed: $Id$
 ##########################################
 
 

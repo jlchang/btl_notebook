@@ -5,7 +5,7 @@
 #processing script by Michele Busby & Catherine Li
 #to downsample at specific numbers of reads
 # by Jean Chang
-#Last Changed: 04012017 (April Fool's!)
+#Last Changed: $Id$
 ##########################################
 
 INPUT_BAM=$1
