@@ -5,7 +5,8 @@
 #processing script by Michele Busby & Catherine Li
 #to downsample at specific numbers of reads
 # by Jean Chang
-#Last Changed: $Id$
+#Last Changed: $Format:%ci$ ($Format:%H$)
+# $Id$
 ##########################################
 
 INPUT_BAM=$1

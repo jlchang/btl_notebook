@@ -1,5 +1,2 @@
 ChipSeqCallPeaksSubsampled.sh ident export-subst
 ChipSeqSubsamplePipeline.sh ident export-subst
-
-#expands to YYYY-MM-DD HH:MM:SS +TZOFFSET (HASH)
-$Format:%ci$ ($Format:%H$)

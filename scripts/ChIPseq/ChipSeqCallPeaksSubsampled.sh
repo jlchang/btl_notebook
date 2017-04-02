@@ -5,7 +5,8 @@
 #by Michele Busby & Catherine Li
 #to accept downsample seeds
 # by Jean Chang
-#Last Changed: $Id$
+#Last Changed: $Format:%ci$ ($Format:%H$)
+# $Id$
 ##########################################
 
 
