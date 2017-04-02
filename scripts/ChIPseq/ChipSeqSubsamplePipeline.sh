@@ -3,7 +3,7 @@
 ##########################################
 #Modification of ChIP Sequencing SSF product processing script
 #ChipSeqSSFPipeline.sh by Michele Busby & Catherine Li
-#to downsample at specific numbers of reads
+# to downsample at specific numbers of reads
 # modified by Jean Chang
 # Last Changed: $Format:%ci$ ($Format:%H$)
 # $Id$
