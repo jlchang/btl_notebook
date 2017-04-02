@@ -16,7 +16,7 @@ GENOME_FILE=$5
 PAIRED_END=$6 #TRUE If paired end or else FALSE
 QUEUE=$7
 SCRIPT_DIR=$8
-SUBSAMPLE_ITERATIONS=$9
+#SUBSAMPLE_ITERATIONS=$9 set further down, default is 2 if not supplied
 
 
 
@@ -255,7 +255,7 @@ for i in 50000
         echo GENOME_FILE $GENOME_FILE
         echo PAIRED_END $PAIRED_END
         echo N_READS $N_READS
-        echo CONTROL_DIR $CONTROL_DIR 
+        echo CONTROL_DIR $CONTROL_DIR
         echo SCRIPT_DIR $SCRIPT_DIR
 
 
