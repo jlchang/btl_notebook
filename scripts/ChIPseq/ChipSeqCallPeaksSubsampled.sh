@@ -1,11 +1,11 @@
 #!/bin/sh -x
 
 ##########################################
-#Modification of dowsampling script
+#Modification of dowsampling script ChipSeqCallPeaksDownsampled.sh
 #by Michele Busby & Catherine Li
-#to accept downsample seeds
-# by Jean Chang
-#Last Changed: $Format:%ci$ ($Format:%H$)
+# to accept downsample seeds
+# modifications by Jean Chang
+# Last Changed: $Format:%ci$ ($Format:%H$)
 # $Id$
 ##########################################
 

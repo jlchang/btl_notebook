@@ -1,11 +1,11 @@
 #!/bin/sh -x
 
 ##########################################
-#Modification of ChIP Sequencing SSF product
-#processing script by Michele Busby & Catherine Li
+#Modification of ChIP Sequencing SSF product processing script
+#ChipSeqSSFPipeline.sh by Michele Busby & Catherine Li
 #to downsample at specific numbers of reads
-# by Jean Chang
-#Last Changed: $Format:%ci$ ($Format:%H$)
+# modified by Jean Chang
+# Last Changed: $Format:%ci$ ($Format:%H$)
 # $Id$
 ##########################################
 
