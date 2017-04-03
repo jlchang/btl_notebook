@@ -238,8 +238,7 @@ if [ $# -eq 8 ]
     SUBSAMPLE_ITERATIONS=$9
 fi
 
-for i in 50000
-# commenting out other subsample points for quicker testing: 100000 250000 600000 1500000 4000000 11000000 30000000
+for i in 50000 100000 250000 600000 1500000 4000000 11000000 30000000
     do
     for ((j=1; j<=$SUBSAMPLE_ITERATIONS; j=j+1));
         do
