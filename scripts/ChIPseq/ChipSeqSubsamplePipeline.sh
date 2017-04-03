@@ -21,6 +21,7 @@ SCRIPT_DIR=$8
 
 
 
+
 echo INPUT_DIR $INPUT_DIR
 echo OUTPUT_DIR $OUTPUT_DIR
 echo CONTROL $CONTROL
@@ -39,7 +40,7 @@ echo SCRIPT_DIR $SCRIPT_DIR
 source /broad/software/scripts/useuse
 use .homer-4.7
 use .bedtools-2.25.0-bugfixed
-use .igvtools_2.1.7
+use igvtools_2.3
 use .samtools-0.1.18
 
 ##########################################

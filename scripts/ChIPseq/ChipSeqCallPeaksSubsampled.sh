@@ -41,7 +41,7 @@ echo SCRIPT_DIR $SCRIPT_DIR
 source /broad/software/scripts/useuse
 use .homer-4.7
 use .bedtools-version-2.17.0
-use .igvtools_2.1.7
+use igvtools_2.3
 use .samtools-0.1.18
 
 
