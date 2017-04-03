@@ -1,2 +1,3 @@
 ChipSeqCallPeaksSubsampled.sh ident export-subst
 ChipSeqSubsamplePipeline.sh ident export-subst
+ChipSeqSubsampleAllBamsInDirectory.sh ident export-subst
