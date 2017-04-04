@@ -89,8 +89,8 @@ if [ $# -eq 9 ]
     echo "No seed argument supplied, using default seed"
     SEED=""
   else
-    echo "Setting SEED to $10"
-    SEED="-seed $10"
+    echo "Setting SEED to ${10}"
+    SEED="-seed ${10}"
 fi
 
 #Downsample data
