@@ -33,6 +33,7 @@ echo SCRIPT_DIR $SCRIPT_DIR
 
 
 
+
 ##########################################
 #Call software installed at Broad
 ##########################################
@@ -42,6 +43,7 @@ use .homer-4.7
 use .bedtools-2.25.0-bugfixed
 use igvtools_2.3
 use .samtools-0.1.18
+use UGER
 
 ##########################################
 #Set up output directories
