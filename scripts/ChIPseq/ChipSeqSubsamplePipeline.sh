@@ -244,7 +244,7 @@ for i in 50000 100000 250000 600000 1500000 4000000 11000000 30000000
     do
     for ((j=1; j<=$SUBSAMPLE_ITERATIONS; j=j+1));
         do
-        N_READS=$i+$j
+        N_READS=$i
         SEED=$j
         echo N_READS is $N_READS
         echo SEED is $SEED

@@ -94,29 +94,30 @@ if [ $# -eq 9 ]
 fi
 
 #Downsample data
-/cil/shed/apps/internal/bam_utilities/GetRandomSampleByRead/GetRandomByRead -bam $INPUT_BAM -out $OUTPUT_DIR/Downsampling/bams/$STEM.$N_READS.bam -nReads $N_READS $SEED
+/cil/shed/apps/internal/bam_utilities/GetRandomSampleByRead/GetRandomByRead
+-bam $INPUT_BAM -out $OUTPUT_DIR/Downsampling/bams/$STEM.$N_READS.$SEED.bam -nReads $N_READS $SEED
 
 #Make tags and call peaks
 
 if [ "$PAIRED_END" == "TRUE" ];
 then
-	makeTagDirectory $OUTPUT_DIR/Downsampling/Tags/$STEM.$N_READS $OUTPUT_DIR/Downsampling/bams/$STEM.$N_READS.bam -genome $GENOME_FILE -illuminaPE -tbp 1
+	makeTagDirectory $OUTPUT_DIR/Downsampling/Tags/$STEM.$N_READS.$SEED $OUTPUT_DIR/Downsampling/bams/$STEM.$N_READS.$SEED.bam -genome $GENOME_FILE -illuminaPE -tbp 1
 else
-makeTagDirectory $OUTPUT_DIR/Downsampling/Tags/$STEM.$N_READS $OUTPUT_DIR/Downsampling/bams/$STEM.$N_READS.bam -genome $GENOME_FILE
+makeTagDirectory $OUTPUT_DIR/Downsampling/Tags/$STEM.$N_READS.$SEED $OUTPUT_DIR/Downsampling/bams/$STEM.$N_READS.$SEED.bam -genome $GENOME_FILE
 fi
 
 if [ "$CONTROL" == "NONE" ];
 then
 	echo "findPeaks $OUTPUT_DIR/$STEM -style $PEAK_STYLE -o $OUTPUT_DIR/Peaks/$STEM.calls "
-	findPeaks $OUTPUT_DIR/Downsampling/Tags/$STEM.$N_READS -style $PEAK_STYLE -o $OUTPUT_DIR/Downsampling/Peaks/$STEM.$N_READS.calls
+	findPeaks $OUTPUT_DIR/Downsampling/Tags/$STEM.$N_READS.$SEED -style $PEAK_STYLE -o $OUTPUT_DIR/Downsampling/Peaks/$STEM.$N_READS.$SEED.calls
 
 else
 	echo "findPeaks $OUTPUT_DIR/$STEM -style $PEAK_STYLE -o $OUTPUT_DIR/Peaks/$STEM.calls -i $CONTROL_DIR"
-	findPeaks $OUTPUT_DIR/Downsampling/Tags/$STEM.$N_READS -style $PEAK_STYLE -o $OUTPUT_DIR/Downsampling/Peaks/$STEM.$N_READS.calls -i $CONTROL_DIR
+	findPeaks $OUTPUT_DIR/Downsampling/Tags/$STEM.$N_READS.$SEED -style $PEAK_STYLE -o $OUTPUT_DIR/Downsampling/Peaks/$STEM.$N_READS.$SEED.calls -i $CONTROL_DIR
 fi
 
 #Count peaks
-N_PEAKS=$(grep -v "^#" $OUTPUT_DIR/Downsampling/Peaks/$STEM.$N_READS.calls | awk '{ sum += $7 } END { print sum }')
+N_PEAKS=$(grep -v "^#" $OUTPUT_DIR/Downsampling/Peaks/$STEM.$N_READS.$SEED.calls | awk '{ sum += $7 } END { print sum }')
 echo N_PEAKS is $N_PEAKS
 printf "%s\t%f\t%f\n" $STEM $N_READS $N_PEAKS >>$OUTPUT_DIR/Downsampling/nPeaksDownsampling.$STEM.txt
 
