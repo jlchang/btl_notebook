@@ -94,8 +94,7 @@ if [ $# -eq 9 ]
 fi
 
 #Downsample data
-/cil/shed/apps/internal/bam_utilities/GetRandomSampleByRead/GetRandomByRead
--bam $INPUT_BAM -out $OUTPUT_DIR/Downsampling/bams/$STEM.$N_READS.$SEED.bam -nReads $N_READS $SEED
+/cil/shed/apps/internal/bam_utilities/GetRandomSampleByRead/GetRandomByRead -bam $INPUT_BAM -out $OUTPUT_DIR/Downsampling/bams/$STEM.$N_READS.$SEED.bam -nReads $N_READS $SEED
 
 #Make tags and call peaks
 
