@@ -1,0 +1,27 @@
+---
+title: "MdReport-explore"
+output: html_document
+---
+
+Set up
+```{r}
+library(tidyverse)
+report = "/gsap/assembly_analysis/SSF/SmartSeq2/SSF-11912/SSF-11912_SmartSeqAnalysisV1.1_1/SSF-11912_SmartSeqAnalysisV1.1_1.1507041315376.MdReport.tsv"
+df <- read.table(
+  file = report,
+  sep="\t",
+  header=T,
+  stringsAsFactors = FALSE
+)
+```
+
+You can also embed plots, for example:
+
+```{r, echo=FALSE}
+boxplot(rRNArate ~ expt, data = df ,las=2,
+  ylab = "rRNA rate",
+  main = "Average rRNA rate across SS2 projects"
+)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
