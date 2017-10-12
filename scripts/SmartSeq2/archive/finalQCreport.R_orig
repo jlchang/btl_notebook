@@ -1,0 +1,72 @@
+library(tidyverse)
+
+SSF = commandArgs(trailingOnly=TRUE)
+
+report = list.files( path = "." , pattern = "*.MdReport.tsv")
+{
+if (length(report)==0) { stop("no report found")}
+}
+{
+if (length(report) > 1) { stop("more than one report found")}
+print("reporting on: ")
+}
+print(report)
+
+# test if there is at least one argument: if not, use test file
+#if (length(report)==0) {
+#	report = "/btl/projects/SSF/SmartSeq2/MdReports/SSF-11663_SmartSeqAnalysisV1.1_1.1500394646935.MdReport.tsv"
+#}
+
+df <- read.table(
+  file = report,
+  sep="\t",
+  header=T,
+  stringsAsFactors = FALSE
+)
+
+filename <- paste("/broad/hptmp/jlchang/SSF-",SSF,"_finalQC.pdf", sep="")
+
+pdf(file=filename, onefile = TRUE, paper='USr')
+
+#plot total reads, ordered by totalReads; references 20% of samples (vert), 5M reads (horiz)
+tR<-ggplot(data=df, aes(x = reorder(sampleName, totalReads), y=totalReads)) + geom_bar(stat="identity") + theme(axis.text.x = element_text(size=5, angle = 90, hjust = 1)) + geom_vline(xintercept=ceiling(nrow(df)*.2), colour = "purple") + geom_hline(yintercept=5000000, colour ="red") + geom_hline(yintercept=mean(df$totalReads), colour = "blue") + geom_text(aes(5,signif(mean(df$totalReads), digits = 3),label = signif(mean(df$totalReads), digits = 3), vjust = -1))
+
+tR +  xlab("Sample Name") 
+
+rA<-ggplot(data=df, aes(x = reorder(sampleName, pctPfReadsAligned), y=pctPfReadsAligned)) + geom_bar(stat="identity") + theme(axis.text.x = element_text(size=5, angle = 90, hjust = 1)) + geom_vline(xintercept=ceiling(nrow(df)*.2), colour = "purple") + geom_hline(yintercept=0.70, colour ="red") + geom_hline(yintercept=mean(df$pctPfReadsAligned), colour = "blue") + geom_text(aes(5,signif(mean(df$pctPfReadsAligned), digits = 3),label = signif(mean(df$pctPfReadsAligned), digits = 3), vjust = -1))
+
+rA +  xlab("Sample Name") 
+
+mis<-ggplot(data=df, aes(x = reorder(sampleName, meanInsertSize), y=meanInsertSize)) + geom_bar(stat="identity") + theme(axis.text.x = element_text(size=5, angle = 90, hjust = 1)) + geom_hline(yintercept=200, colour ="red") + geom_hline(yintercept=mean(df$meanInsertSize), colour = "blue") + geom_text(aes(5,signif(mean(df$meanInsertSize), digits = 3),label = signif(mean(df$meanInsertSize), digits = 3), vjust = -1))
+
+mis  +  xlab("Sample Name") 
+
+
+pD<-ggplot(data=df, aes(x = reorder(sampleName, percentDuplication), y=percentDuplication)) + geom_bar(stat="identity") + theme(axis.text.x = element_text(size=5, angle = 90, hjust = 1)) + geom_vline(xintercept=ceiling(nrow(df)*.2), colour = "purple") + geom_hline(yintercept=0.50, colour ="red") + geom_hline(yintercept=mean(df$percentDuplication), colour = "blue") + geom_text(aes(5,signif(mean(df$percentDuplication), digits = 3),label = signif(mean(df$percentDuplication), digits = 3), vjust = -1))
+
+pD +  xlab("Sample Name") 
+
+dRM<-ggplot(data=df, aes(x = reorder(sampleName, duplicationRateOfMapped), y=duplicationRateOfMapped)) + geom_bar(stat="identity") + theme(axis.text.x = element_text(size=5, angle = 90, hjust = 1)) + geom_vline(xintercept=ceiling(nrow(df)*.2), colour = "purple") + geom_hline(yintercept=0.50, colour ="red") + geom_hline(yintercept=mean(df$duplicationRateOfMapped), colour = "blue") + geom_text(aes(5,signif(mean(df$duplicationRateOfMapped), digits = 3),label = signif(mean(df$duplicationRateOfMapped), digits = 3), vjust = -1))
+
+dRM  +  xlab("Sample Name") 
+
+gD<-ggplot(data=df, aes(x = reorder(sampleName, genesDetected), y=genesDetected)) + geom_bar(stat="identity") + theme(axis.text.x = element_text(size=5, angle = 90, hjust = 1)) + geom_vline(xintercept=ceiling(nrow(df)*.2), colour = "purple") + geom_hline(yintercept=mean(df$genesDetected), colour = "blue") + geom_hline(yintercept=1000, colour ="red") + geom_text(aes(5,signif(mean(df$genesDetected), digits = 3),label = signif(mean(df$genesDetected), digits = 3), vjust = -1))
+
+gD +  xlab("Sample Name") 
+
+pA<-ggplot(data=df, aes(x = reorder(sampleName, pctAdapter), y=pctAdapter)) + geom_bar(stat="identity") + theme(axis.text.x = element_text(size=5, angle = 90, hjust = 1)) + geom_vline(xintercept=ceiling(nrow(df)*.2), colour = "purple") + geom_hline(yintercept=0.15, colour ="red") + geom_hline(yintercept=mean(df$pctAdapter), colour = "blue") + geom_text(aes(5,signif(mean(df$pctAdapter), digits = 3),label = signif(mean(df$pctAdapter), digits = 3), vjust = -1))
+
+pA  +  xlab("Sample Name") 
+
+rRNA<-ggplot(data=df, aes(x = reorder(sampleName, rRNArate), y=rRNArate)) + geom_bar(stat="identity") + theme(axis.text.x = element_text(size=5, angle = 90, hjust = 1)) + geom_vline(xintercept=ceiling(nrow(df)*.2), colour = "purple") + geom_hline(yintercept=0.30, colour ="red") + geom_hline(yintercept=mean(df$rRNArate), colour = "blue") + geom_text(aes(5,signif(mean(df$rRNArate), digits = 3),label = signif(mean(df$rRNArate), digits = 3), vjust = -1))
+
+rRNA +  xlab("Sample Name")
+
+#library(gridExtra)
+#grid.arrange(gD, tR)
+#grid.arrange(rA, mis)
+#grid.arrange(pD, dRM)
+#grid.arrange(pA, rRNA)
+
+dev.off() 
+
