@@ -54,7 +54,7 @@ echo "analysis directory created at $dirPath/SSF-$1"
 echo
 echo "create input_data.tsv then run the following commands:"
 echo "use Python-2.7"
-echo "/cil/shed/apps/internal/widdler/widdler.py run $dirPath/SSF-$1/smartseq.wdl $dirPath/SSF-$1/input_$2.json -S btl-cromwell"
+echo "/cil/shed/apps/internal/widdler/widdler.py run $dirPath/SSF-$1/smartseq.wdl $dirPath/SSF-$1/input_$2.json -D -o workflow_failure_mode:NoNewCalls -S btl-cromwell"
 echo
 echo "record workflowID and monitor at http://btl-cromwell:9000/api/workflows/v2/<workflowID>/timing"
 
