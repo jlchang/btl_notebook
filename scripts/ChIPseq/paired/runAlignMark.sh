@@ -1,7 +1,5 @@
 #!/bin/bash
 
-
-
 orig=`pwd`
 source /broad/software/scripts/useuse
 use UGER
@@ -9,12 +7,13 @@ use UGER
 set -e
 echo "analysis directory is $orig"
 
-for i in $(cat runInput.txt)
+while IFS=$'\t': read sample fastq1 fastq2
 do
   echo "set up analysis dir for $i"
   cd $orig
-  mkdir ${i}_single
-  cd ${i}_single
-  echo "job to run in analysis dir: qsub -l h_vmem=8G -l h_rt=18:00:00 -N $i /btl/analysis/ChIPseq/scripts/aquas_HiSeq_single_fasta.sh $1/${i}.fastq.gz ${i}_single_analysis"
-  qsub -l h_vmem=8G -l h_rt=18:00:00 -N $i /btl/analysis/ChIPseq/scripts/aquas_HiSeq_single_fasta.sh $1/${i}.fastq.gz ${i}_single_analysis
-done
+  mkdir ${sample}_PE
+  cd ${sample}_PE
+  echo "job to run in analysis dir: qsub -cwd -l h_vmem=10G -l h_rt=4:00:00 -N ${sample} /cil/shed/sandboxes/jlchang/notebook/scripts/ChIPseq/paired/alignMarkInput.sh ${sample} ${fastq1} ${fastq2}"
+  qsub -cwd -l h_vmem=10G -l h_rt=4:00:00 -l h="!(hw-uger*|uger-c012|uger-c041|ugerbm-d006)" -N S_${sample} /cil/shed/sandboxes/jlchang/notebook/scripts/ChIPseq/paired/alignMarkInput.sh ${sample} ${fastq1} ${fastq2}
+done < input_data.tsv
+#done < test.in
