@@ -24,7 +24,7 @@ df <- read.table(
   stringsAsFactors = FALSE
 )
 
-df2 <- df[ , -which(names(df) %in% c("unpairedReads","failedVendorQCCheck","noCovered5Prime", "fivePrimeNorm"))]
+df2 <- df[ , -which(names(df) %in% c("unpairedReads","failedVendorQCCheck","noCovered5Prime", "fivePrimeNorm", "chimericPairs"))]
 
 result = data.frame(z = rowSums( df2 == 0 ))
 
@@ -32,7 +32,7 @@ print(result)
 
 df2[which(result$z > 0),]
 
-print("zero values ignored for unpairedReads,failedVendorQCCheck,noCovered5Prime,fivePrimeNorm")
+print("zero values ignored for unpairedReads,failedVendorQCCheck,noCovered5Prime,fivePrimeNorm,chimericPairs")
 print("rows in MdReport with less expected non-zero values - look for zero values in data above")
 
 which(result$z > 0)
