@@ -11,7 +11,8 @@ SAMPLE_NAME=$5
 #reverse complemented barcode
 #RC_BARCODE_1=( $(echo $BARCODE_1 | rev | tr ATGC TACG))
 RC_BARCODE_1=$3
-RC_BARCODE_2=( $(echo $BARCODE_2 | rev | tr ATGC TACG))
+#RC_BARCODE_2=( $(echo $BARCODE_2 | rev | tr ATGC TACG))
+RC_BARCODE_2=$4
 
 function aggregateFastqs {
 	pair=$1
