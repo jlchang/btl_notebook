@@ -36,8 +36,8 @@ cp -i /cil/shed/apps/internal/wdl/smartseq.wdl $dirPath/SSF-$1/
 cat > $dirPath/SSF-$1/input_$2.json <<msg
 {
   "smrtseq.analysis_name": "SSF-$1_SmartSeqAnalysisV1.1_$2",
-  "smrtseq.input_samples_files": "/btl/analysis/SSF/SmartSeq2/SSF-$1/input_data.tsv",
-  "smrtseq.output_dir": "/btl/analysis/SSF/SmartSeq2/SSF-$1/SSF-$1_SmartSeqAnalysisV1.1_$2",
+  "smrtseq.input_samples_files": "$dirPath/SSF-$1/input_data.tsv",
+  "smrtseq.output_dir": "$dirPath/SSF-$1/SSF-$1_SmartSeqAnalysisV1.1_$2",
   "smrtseq.sample_set_id": "SSF-$1",
   "smrtseq.run_ercc": "false"
 }
@@ -64,7 +64,8 @@ echo "record workflowID and monitor at http://btl-cromwell:9000/api/workflows/v2
 #
 ###
 
-
+### 20171029
+# replaced hard-coded analysis path prefix with analysis location variable at top of script
 
 ### 20171006
 # new filesystem on iodine for SS2 analysis to alleviate I/O issues with Lightning (/btl/projects)
