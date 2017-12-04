@@ -1,3 +1,12 @@
+######################
+#
+#  runAlignMark.sh
+#
+#  for samples in input_data.tsv, run alignMarkInput.sh for each sample
+#
+######################
+
+
 #!/bin/bash
 
 orig=`pwd`
