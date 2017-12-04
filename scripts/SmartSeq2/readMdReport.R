@@ -1,3 +1,11 @@
+######################
+#
+#  readMdReport.R
+#
+#  finds MD Report in current directory and loads into dataframe df
+#
+######################
+
 library(tidyverse)
 
 #report = commandArgs(trailingOnly=TRUE)
