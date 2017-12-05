@@ -252,9 +252,9 @@ awk '{ sum += $11 } END { print sum ; }' ${PAIRED_MAPQ_PREFIX}.H3K27ac.bedcov > 
 # gather metrics
 # =============
 
-Rscript /cil/shed/sandboxes/jlchang/notebook/scripts/ChIPseq/paired/processMapqCounts.R
+Rscript /cil/shed/sandboxes/jlchang/notebook/scripts/ChIPseq/paired/v0.02/processMapqCounts.R
 
-/cil/shed/sandboxes/jlchang/notebook/scripts/ChIPseq/paired/gatherPairedQCmetrics.sh $1 > $1.metrics
+/cil/shed/sandboxes/jlchang/notebook/scripts/ChIPseq/paired/v0.02/gatherPairedQCmetrics.sh $1 > $1.metrics
 
 
 
