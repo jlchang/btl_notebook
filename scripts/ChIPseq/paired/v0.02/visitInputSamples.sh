@@ -36,8 +36,8 @@ do
     echo "replace old metrics file with additional metrics"
     mv ${sample}.metrics ${sample}.metrics_orig
   fi
-  Rscript /cil/shed/sandboxes/jlchang/notebook/scripts/ChIPseq/paired/processMapqCounts.R
-  /cil/shed/sandboxes/jlchang/notebook/scripts/ChIPseq/paired/gatherPairedQCmetrics.sh ${sample} > ${sample}.metrics
+  Rscript /cil/shed/sandboxes/jlchang/notebook/scripts/ChIPseq/paired/v0.02/processMapqCounts.R
+  /cil/shed/sandboxes/jlchang/notebook/scripts/ChIPseq/paired/v0.02/gatherPairedQCmetrics.sh ${sample} > ${sample}.metrics
   echo "gather metrics for ${orig}/${sample}_PE/${sample}.metrics"
   cd ${orig}
   metrics=$(tail -n1 ${orig}/${sample}_PE/${sample}.metrics)
@@ -47,4 +47,4 @@ do
 done < input_data.tsv
 #done < test.in
 
-Rscript /cil/shed/sandboxes/jlchang/notebook/scripts/ChIPseq/paired/calcExptMetrics.R
+Rscript /cil/shed/sandboxes/jlchang/notebook/scripts/ChIPseq/paired/v0.02/calcExptMetrics.R

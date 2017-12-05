@@ -12,7 +12,7 @@ while IFS=$'\t': read sample fastq1 fastq2
 do
   echo "run analysis for ${sample}"
   cd $orig/${sample}_PE
-  echo "Rscript /cil/shed/sandboxes/jlchang/notebook/scripts/ChIPseq/paired/processMapqCounts.R"
-  Rscript /cil/shed/sandboxes/jlchang/notebook/scripts/ChIPseq/paired/processMapqCounts.R
+  echo "Rscript /cil/shed/sandboxes/jlchang/notebook/scripts/ChIPseq/paired/v0.02/processMapqCounts.R"
+  Rscript /cil/shed/sandboxes/jlchang/notebook/scripts/ChIPseq/paired/v0.02/processMapqCounts.R
 done < input_data.tsv
 #done < test.in
