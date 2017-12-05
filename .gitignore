@@ -2,3 +2,5 @@
 .ipynb_checkpoints
 md2pdfOptions
 sample\ entries
+scripts/ChIPseq/aquas_reference/
+scripts/ChIPseq/aquas_scripts/older_scripts/
