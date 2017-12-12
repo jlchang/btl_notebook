@@ -5,11 +5,10 @@ set -e
 currDir=$(pwd)
 echo "current Directory is $currDir"
 fastq="$currDir/fastq"
-#echo "making $fastq"
-#ls $fastq
-#mkdir $fastq
+echo "making $fastq"
+mkdir $fastq
 
-path=$(cat orig_dataPath)
+path=$(cat fastqPath)
 echo "obtain data from $path"
 
 while IFS=$'\t': read sampleName barcode1 barcode2
