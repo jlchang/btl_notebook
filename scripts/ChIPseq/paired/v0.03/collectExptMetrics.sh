@@ -26,7 +26,10 @@ fi
 set -e
 echo "analysis directory is $orig"
 
-echo "Expt	Sample	Ctrl	Tot_Reads	MAPQ0_Reads	mapq0PE_rip	mapq0PE_FRIP	R1_CHIMERAS	R1_ADAPTER	R2_CHIMERAS	R2_ADAPTER	pDUPLICATION	EstLibSize	MapRaw_Reads	PropPr_Reads	PrSing_Reads	mmdc_Reads	pDup_Reads	mapq0_Reads	mapq5_Reads	mapq10_Reads	mapq28_Reads	mapq29_Reads" >> ${expt}.metrics
+#mapq counting incorrect, removing as metric (20171214)
+#echo "Expt	Sample	Ctrl	Tot_Reads	MAPQ0_Reads	mapq0PE_rip	mapq0PE_FRIP	R1_CHIMERAS	R1_ADAPTER	R2_CHIMERAS	R2_ADAPTER	pDUPLICATION	EstLibSize	MapRaw_Reads	PropPr_Reads	PrSing_Reads	mmdc_Reads	pDup_Reads	mapq0_Reads	mapq5_Reads	mapq10_Reads	mapq28_Reads	mapq29_Reads" >> ${expt}.metrics
+
+echo "Expt	Sample	Ctrl	Tot_Reads	MAPQ0_Reads	mapq0PE_rip	mapq0PE_FRIP	R1_CHIMERAS	R1_ADAPTER	R2_CHIMERAS	R2_ADAPTER	pDUPLICATION	EstLibSize	MapRaw_Reads	PropPr_Reads	PrSing_Reads	mmdc_Reads	pDup_Reads" >> ${expt}.metrics
 
 while IFS=$'\t': read sample fastq1 fastq2
 do

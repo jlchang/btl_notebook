@@ -67,22 +67,25 @@ mperip=$(cat ${sample}.mapq0.PE.nodup.H3K27ac.rip)
 
 mpefrip=$(echo "scale=4; $mperip/$MR" | bc)
 
+#mapq quantitation inaccurate, removing as metric (20171214)
 #map0
-mapq0=$(sed -n "1p" ${sample}.raw.cleaned.bam.below_Mapq30.count.bin | grep mapq0 | cut -f 2)
+#mapq0=$(sed -n "1p" ${sample}.raw.cleaned.bam.below_Mapq30.count.bin | grep mapq0 | cut -f 2)
 
 #map5
-mapq5=$(sed -n "2p" ${sample}.raw.cleaned.bam.below_Mapq30.count.bin | grep mapq5 | cut -f 2)
+#mapq5=$(sed -n "2p" ${sample}.raw.cleaned.bam.below_Mapq30.count.bin | grep mapq5 | cut -f 2)
 
 #map10
-mapq10=$(sed -n "3p" ${sample}.raw.cleaned.bam.below_Mapq30.count.bin | grep mapq10 | cut -f 2)
+#mapq10=$(sed -n "3p" ${sample}.raw.cleaned.bam.below_Mapq30.count.bin | grep mapq10 | cut -f 2)
 
 #map28
-mapq28=$(sed -n "7p" ${sample}.raw.cleaned.bam.below_Mapq30.count.bin | grep mapq28 | cut -f 2)
+#mapq28=$(sed -n "7p" ${sample}.raw.cleaned.bam.below_Mapq30.count.bin | grep mapq28 | cut -f 2)
 
 #map29
-mapq29=$(sed -n "8p" ${sample}.raw.cleaned.bam.below_Mapq30.count.bin | grep mapq29 | cut -f 2)
+#mapq29=$(sed -n "8p" ${sample}.raw.cleaned.bam.below_Mapq30.count.bin | grep mapq29 | cut -f 2)
 
-echo -e "Tot_Reads\tMAPQ0_Reads\tmapq0PE_rip\tmapq0PE_FRIP\tR1_CHIMERAS\tR1_ADAPTER\tR2_CHIMERAS\tR2_ADAPTER\tpDUPLICATION\tEstLibSize\tMapRaw_Reads\tPropPr_Reads\tPrSing_Reads\tmmdc_Reads\tpDup_Reads\tmapq0_Reads\tmapq5_Reads\tmapq10_Reads\tmapq28_Reads\tmapq29_Reads"
-echo -e "$TR\t$MR\t$mperip\t$mpefrip\t$R1C\t$R1A\t$R2C\t$R2A\t$dup\t$els\t$MRR\t$PP\t$sing\t$mmdc\t$pdup\t$mapq0\t$mapq5\t$mapq10\t$mapq28\t$mapq29"
+#echo -e "Tot_Reads\tMAPQ0_Reads\tmapq0PE_rip\tmapq0PE_FRIP\tR1_CHIMERAS\tR1_ADAPTER\tR2_CHIMERAS\tR2_ADAPTER\tpDUPLICATION\tEstLibSize\tMapRaw_Reads\tPropPr_Reads\tPrSing_Reads\tmmdc_Reads\tpDup_Reads\tmapq0_Reads\tmapq5_Reads\tmapq10_Reads\tmapq28_Reads\tmapq29_Reads"
+#echo -e "$TR\t$MR\t$mperip\t$mpefrip\t$R1C\t$R1A\t$R2C\t$R2A\t$dup\t$els\t$MRR\t$PP\t$sing\t$mmdc\t$pdup\t$mapq0\t$mapq5\t$mapq10\t$mapq28\t$mapq29"
 
+echo -e "Tot_Reads\tMAPQ0_Reads\tmapq0PE_rip\tmapq0PE_FRIP\tR1_CHIMERAS\tR1_ADAPTER\tR2_CHIMERAS\tR2_ADAPTER\tpDUPLICATION\tEstLibSize\tMapRaw_Reads\tPropPr_Reads\tPrSing_Reads\tmmdc_Reads\tpDup_Reads"
+echo -e "$TR\t$MR\t$mperip\t$mpefrip\t$R1C\t$R1A\t$R2C\t$R2A\t$dup\t$els\t$MRR\t$PP\t$sing\t$mmdc\t$pdup"
 

@@ -85,7 +85,7 @@ rm ${RAW_BAM_FILE}
 # =============
 
 samtools view -U ${RAW_CLEAN_FILE}.below_Mapq30.sam -q 30 ${RAW_CLEAN_FILE} > /dev/null
-cat ${RAW_CLEAN_FILE}.below_Mapq30.sam | cut -f 5 | sort | uniq -c > ${RAW_CLEAN_FILE}.below_Mapq30.count
+cat ${RAW_CLEAN_FILE}.below_Mapq30.sam | grep -v XA | cut -f 5 | sort | uniq -c > ${RAW_CLEAN_FILE}.below_Mapq30.count
 
 rm ${RAW_CLEAN_FILE}.below_Mapq30.sam
 
@@ -197,7 +197,8 @@ awk '{ sum += $11 } END { print sum ; }' ${PAIRED_MAPQ_PREFIX}.H3K27ac.bedcov > 
 # gather metrics
 # =============
 
-Rscript $SCRIPTDIR/processMapqCounts.R
+#mapq counts inaccurate, removing metrics from collection (20171214)
+#Rscript $SCRIPTDIR/processMapqCounts.R
 
 $SCRIPTDIR/gatherPairedAlignMarkDmetrics.sh $1 > $1.metrics
 
