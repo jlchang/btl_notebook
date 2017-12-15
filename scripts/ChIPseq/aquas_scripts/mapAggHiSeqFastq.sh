@@ -11,8 +11,8 @@ mkdir $fastq
 path=$(cat fastqPath)
 echo "obtain data from $path"
 
-while IFS=$'\t': read sampleName barcode1 barcode2
+while IFS=$'\t': read barcode1 barcode2 sampleName
 do
-  echo "/cil/shed/sandboxes/jlchang/notebook/scripts/ChIPseq/aquas_scripts/aggregateFastqs.sh $fastq $path $sampleName $barcode1 $barcode2"
-  /cil/shed/sandboxes/jlchang/notebook/scripts/ChIPseq/aquas_scripts/aggregateFastqs.sh $fastq $path $sampleName $barcode1 $barcode2
+  echo "/cil/shed/sandboxes/jlchang/notebook/scripts/ChIPseq/aquas_scripts/aggregateFastqs.sh $fastq $path $barcode1 $barcode2 $sampleName"
+  /cil/shed/sandboxes/jlchang/notebook/scripts/ChIPseq/aquas_scripts/aggregateFastqs.sh $fastq $path $barcode1 $barcode2 $sampleName
 done  < barcode_mapping.txt

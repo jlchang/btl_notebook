@@ -30,7 +30,7 @@ function aggregateFastqs {
 	done
 
 	#if fastq's are in plain fastq format...
-	i=0
+#	i=0
 	if [ "$i" == 0 ]
 	then
 		fileNames=( $( ls ${SEQUENCE_DATA_PATH}/*/*.${RC_BARCODE_1}_${RC_BARCODE_2}.unmapped.${pair}.fastq))
@@ -61,6 +61,8 @@ function aggregateFastqs {
 		echo "Removing temporary fastq file ${FASTQ_DIR}/${SAMPLE_NAME}.temp.${j}.fastq..."
 		rm ${FASTQ_DIR}/${SAMPLE_NAME}.temp.${j}.fastq
 	done
+
+    gzip ${FASTQ_DIR}/${SAMPLE_NAME}.${pair}.fastq
 
 }
 
