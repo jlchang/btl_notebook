@@ -1,0 +1,7 @@
+v0.03s found method to derive recounts per mapq score was flawed, removed mapq readcount from metrics
+
+v0.03 remove aquas-like bam calculations, remove map28(ie remove all MAPQ <29), replace with mapq0 (ie remove only MAPQ0 reads - resulted in same stats as original PE bam)
+
+v0.02 derive more metrics (elc casm from picard), make mapq28 bam (remove all MAPQ<29 reads)
+
+v0.01 aquas-like bam and PE bam (filter for properly paired)
