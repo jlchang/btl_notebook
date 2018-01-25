@@ -97,7 +97,7 @@ RAW_MAPQ_PREFIX="${OFPREFIX}.mapq0"
 RAW_MAPQ_FILE="${RAW_MAPQ_PREFIX}.bam"
 RAW_MAPQ_FILE_MAPSTATS="${RAW_MAPQ_PREFIX}.flagstat"
 
-PAIRED_MAPQ_THRESH=0
+PAIRED_MAPQ_THRESH=1
 
 samtools view -bh -f 2 -q ${PAIRED_MAPQ_THRESH} ${RAW_CLEAN_FILE} | samtools sort - -T 'sorted_temp' -o ${RAW_MAPQ_FILE} 
 
