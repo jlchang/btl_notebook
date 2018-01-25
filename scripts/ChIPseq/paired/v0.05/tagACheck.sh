@@ -1,0 +1,31 @@
+######################
+#
+#  tagACheck.sh
+#
+#  check all samples ran tagAlign reprocessing to completion
+#
+######################
+
+#!/bin/bash
+
+orig=`pwd`
+
+
+
+SCRIPTDIR="/cil/shed/sandboxes/jlchang/notebook/scripts/ChIPseq/paired/v0.04"
+
+fail=0
+while IFS=$'\t': read sample fastq1 fastq2
+do
+  if [ ! -e ${sample}_PE/tagA ]
+
+#if [ ! -e ${sample}_PE/${sample}.raw.cleaned.casm ]
+  then
+    fail=$((fail+1))
+    echo "analysis for $sample did not complete"
+#echo "$sample" >> fails.txt
+fi
+done < input_data.tsv
+
+echo "fails = $fail"
+
