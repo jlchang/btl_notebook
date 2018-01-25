@@ -18,9 +18,9 @@ fi
 
 dirPath="/btl/analysis/SSF/SmartSeq2"
 
-if [ -e $dirPath/SSF-$1 ]
+if [ -e $dirPath/$1 ]
   then
-    echo -n "An analysis directory already exists for SSF-$1, are you sure you wish to proceed? (y/n)"
+    echo -n "An analysis directory already exists for $1, are you sure you wish to proceed? (y/n)"
     read 
     if ! [ $REPLY = "y" ]
       then
@@ -28,25 +28,25 @@ if [ -e $dirPath/SSF-$1 ]
     fi
 fi
 
-mkdir -p $dirPath/SSF-$1
+mkdir -p $dirPath/$1
 
-cp -i /cil/shed/apps/internal/wdl/smartseq.wdl $dirPath/SSF-$1/
+cp -i /cil/shed/apps/internal/wdl/smartseq.wdl $dirPath/$1/
 
-#/cil/shed/sandboxes/jlchang/notebook/scripts/SmartSeq2/ss2json.sh $1 $2 > $dirPath/SSF-$1/input_$2.json
-cat > $dirPath/SSF-$1/input_$2.json <<msg
+#/cil/shed/sandboxes/jlchang/notebook/scripts/SmartSeq2/ss2json.sh $1 $2 > $dirPath/$1/input_$2.json
+cat > $dirPath/$1/input_$2.json <<msg
 {
-  "smrtseq.analysis_name": "SSF-$1_SmartSeqAnalysisV1.1_$2",
-  "smrtseq.input_samples_files": "$dirPath/SSF-$1/input_data.tsv",
-  "smrtseq.output_dir": "$dirPath/SSF-$1/SSF-$1_SmartSeqAnalysisV1.1_$2",
-  "smrtseq.sample_set_id": "SSF-$1",
-  "smrtseq.run_ercc": "false"
+  "smartseq.analysis_name": "$1_SmartSeqAnalysisV1.1_$2",
+  "smartseq.input_samples_files": "$dirPath/$1/input_data.tsv",
+  "smartseq.output_dir": "$dirPath/$1/$1_SmartSeqAnalysisV1.1_$2",
+  "smartseq.sample_set_id": "$1",
+  "smartseq.run_ercc": "false"
 }
 msg
 
 
-echo "analysis directory created at $dirPath/SSF-$1"
+echo "analysis directory created at $dirPath/$1"
 
-#test=awk -F'"' 'NR==4 { print $4 }' $dirPath/SSF-$1/input.json
+#test=awk -F'"' 'NR==4 { print $4 }' $dirPath/$1/input.json
 #if [ -e $test ]
 #  then
 #    echo "WARNING: $test does not exist at location specified in json file"
@@ -54,7 +54,7 @@ echo "analysis directory created at $dirPath/SSF-$1"
 echo
 echo "create input_data.tsv then run the following commands:"
 echo "use Python-2.7"
-echo "/cil/shed/apps/internal/widdler/widdler.py run $dirPath/SSF-$1/smartseq.wdl $dirPath/SSF-$1/input_$2.json -D -o workflow_failure_mode:NoNewCalls -S btl-cromwell"
+echo "/cil/shed/apps/internal/widdler/widdler.py run $dirPath/$1/smartseq.wdl $dirPath/$1/input_$2.json -D -o workflow_failure_mode:NoNewCalls -S btl-cromwell"
 echo
 echo "record workflowID and monitor at http://btl-cromwell:9000/api/workflows/v2/<workflowID>/timing"
 
@@ -63,6 +63,12 @@ echo "record workflowID and monitor at http://btl-cromwell:9000/api/workflows/v2
 # CHANGELOG
 #
 ###
+
+### 20180124
+# user should input full JIRA ticket with prefix instead of just digits
+
+### 20180117
+# json uses "smart" instead of "smrt" spelling
 
 ### 20171029
 # replaced hard-coded analysis path prefix with analysis location variable at top of script
