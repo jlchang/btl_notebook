@@ -23,6 +23,7 @@ do
   then
     fail=$((fail+1))
     echo "analysis for $sample did not complete"
+    head -n 1 ${sample}_PE/${sample}.raw.cleaned.flagstat
 #echo "$sample" >> fails.txt
 fi
 done < input_data.tsv
